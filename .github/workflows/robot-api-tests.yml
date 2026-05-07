@@ -20,7 +20,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
@@ -29,13 +29,13 @@ jobs:
       - name: Run Robot Tests
         run: |
           # Run the full Robot Framework test suite and generate report artifacts.
-          robot tests/
+          # Reports are generated even if tests fail.
+          robot --outputdir results tests/
 
       - name: Upload Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: robot-reports
           path: |
-            report.html
-            log.html
-            output.xml
+            results/**
