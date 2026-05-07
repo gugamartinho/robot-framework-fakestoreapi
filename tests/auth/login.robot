@@ -9,7 +9,7 @@ Suite Setup    Create API Session
 
 # Verify the login endpoint returns a valid authentication token.
 Login Successfully
-    [Tags]    skip    smoke    auth
+    [Tags]    smoke    auth
 
     ${token}=    Login And Get Token
 
