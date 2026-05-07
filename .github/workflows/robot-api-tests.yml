@@ -43,8 +43,6 @@ jobs:
         run: |
           # Run the full Robot Framework test suite and generate report artifacts.
           # Reports are generated even if tests fail.
-          # Note: Auth tests are skipped in CI due to API restrictions on automated requests.
-          # They work fine locally.
           robot --exclude skip --outputdir results tests/
 
       - name: Upload Reports
