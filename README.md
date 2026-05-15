@@ -108,3 +108,40 @@ It checks out code, installs dependencies, runs the Robot test suite, and upload
 - Keep `venv/` and generated report files out of version control.
 - Use `.env.example` as a template for your own `.env` file.
 - Add new keyword libraries under the appropriate domain folder when extending the suite.
+
+
+### Running with Docker
+
+1. **Build the Docker image**  
+To create a reproducible environment for running Robot Framework API tests, build the Docker image using the provided Dockerfile:
+
+```bash
+docker build -t robot-api-tests .
+```
+
+This installs Python, Robot Framework, and all dependencies listed in requirements.txt.
+
+2. Run tests inside Docker
+After building the image, you can execute the full test suite
+```bash
+docker run --rm robot-api-tests
+```
+This runs:
+- all .robot files inside the tests/ directory
+- sequentially (no parallel execution)
+- generating output inside pabot_results/
+
+3. Accessing the Robot Framework reports
+Robot Framework generates:
+
+- log.html
+- report.html
+- output.xml
+
+To make these files available outside the container, mount the results directory:
+```bash
+docker run --rm -u root -v ${PWD}/results:/app/results robot-api-tests
+```
+After the container finishes, you can open the reports locally:
+- results/log.html
+- results/report.html
